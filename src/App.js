@@ -3,9 +3,7 @@ import './App.css';
 import Landing from './pages/Landing';
 import Tasks from './pages/Tasks';
 import EditTask from './components/EditTask';
-
-
-// import Dashboard from './pages/Dashboard';
+import ViewScreen from './components/ViewScreen';
 
 function App() {
   return (
@@ -14,7 +12,7 @@ function App() {
           <Route path='/' element={<Landing/>} />
           <Route path='task' element={<Tasks/>}/>
           <Route path='edittask' element={<EditTask/>} />
-          {/* <Route path='dashboard' element={<Dashboard/>} /> */}
+          <Route path='FullScreen/:id' element={<ViewScreen/>} />
       </Routes>
     </div>
   );

@@ -122,11 +122,11 @@ const sortedByTitle=()=>{
           <div className="mt-[30px] border-2 border-gray-400 rounded-md w-full">
             <div className="w-full p-3 pt-4">
              <div className="flex justify-between">
-             <h5>Tasks </h5>
-             <div className="flex justify-between w-36">
-              <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5'><i class="fa-solid fa-sliders"></i></p>
+             <h5>Tasks <span><i class="fa-solid fa-bolt text-yellow-400"></i></span></h5>
+             <div className="flex justify-between w-28">
+              {/* <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5'><i class="fa-solid fa-sliders"></i></p> */}
               <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5'><i class="fa-solid fa-trash-can"></i></p>
-              <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5'><i class="fa-solid fa-arrow-rotate-left"></i></p>
+              <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5  bg-yellow-300'><i class="fa-regular fa-face-smile bg-yellow-300"></i></p>
               <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5' onClick={handleClickOpen}><i class="fa-solid fa-plus"></i></p>
                 <React.Fragment>
                   <Dialog

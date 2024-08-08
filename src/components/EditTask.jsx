@@ -28,7 +28,7 @@ function EditTask({taskItem}) {
   };
 
   const [editTasks,setEditTasks]=useState({
-    title:taskItem.title,description:taskItem.description,duration:taskItem.duration,priority:taskItem.priority,category:taskItem.category
+    title:taskItem?.title,description:taskItem?.description,duration:taskItem?.duration,priority:taskItem?.priority,category:taskItem?.category
   })
 
   // console.log(editTasks);

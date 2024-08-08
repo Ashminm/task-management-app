@@ -20,3 +20,7 @@ export const editTask=async(body,id)=>{
 export const deleteTask=async(id)=>{
     return await commonApi("DELETE",`${BASEURL}/delete-task/${id}`)
 }
+
+export const getSingleTask=async(id)=>{
+    return await commonApi("GET",`${BASEURL}/single-task/${id}`,"")
+}

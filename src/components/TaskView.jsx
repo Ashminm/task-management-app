@@ -5,6 +5,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { Link } from 'react-router-dom';
+
 function TaskView({task}) {
     const [open, setOpen] = React.useState(false);
 
@@ -23,19 +25,28 @@ function TaskView({task}) {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        maxWidth={false}  // Disable the default maxWidth
+      sx={{ maxWidth: '380px',margin:'auto' }}
+     
       >
         <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
+        <h3>Quick View</h3>
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-           {task.description}
+            <h4>{task.title}</h4>
+           <p>{task.description}</p>
+           <div className="flex justify-between">
+           <p className={`text-md w-full content-center px-3 py-1 me-4 rounded-full ${task.priority == "High" ? "bg-red-300": task.priority === "Medium" ? "bg-orange-300" : "bg-yellow-300"}`}>{task?.priority}</p>
+           <p className={`text-md w-full content-center px-3 py-1 me-4 rounded-full ${task.duration == "High" ? "bg-red-300": task.duration === "Medium" ? "bg-orange-300" : "bg-yellow-300"}`}>{task?.duration}</p>
+           <p className={`text-md w-full content-center px-3 py-1 me-4 rounded-full ${task.category == "High" ? "bg-red-300": task.category === "Medium" ? "bg-orange-300" : "bg-yellow-300"}`}>{task?.category}</p>
+           </div>
+           <button><Link className='decoration-0' to={`/FullScreen/${task?._id}`}>View in Full Screen <i class="fa-solid fa-up-right-and-down-left-from-center"></i></Link></button>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
           <Button onClick={handleClose} autoFocus>
-            Agree
+            Back
           </Button>
         </DialogActions>
       </Dialog>
