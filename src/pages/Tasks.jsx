@@ -15,7 +15,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
-import { addTask, deleteTask, getTask } from '../services/ApiCall';
+import { addTask, deleteTask, getTask,deleteAllTask } from '../services/ApiCall';
 import EditTask from '../components/EditTask';
 import TaskView from '../components/TaskView';
 
@@ -100,10 +100,21 @@ useEffect(()=>{
     }
   }
 
-const sortedByTitle=()=>{
-  const sortedtitle = allTask.sort((ti1, ti2) => ti1.title.localeCompare(ti2.title));
-  setSort(sortedtitle)
-}
+  const deleteAll=async()=>{
+    const res=await deleteAllTask()
+    if(res.status===200){
+      alert("All task deleted!!!")
+    }else{
+      console.log(res.response.data);
+      
+    }
+  }
+
+
+// const sortedByTitle=()=>{
+//   const sortedtitle = allTask.sort((ti1, ti2) => ti1.title.localeCompare(ti2.title));
+//   setSort(sortedtitle)
+// }
 
 
   return (
@@ -113,21 +124,19 @@ const sortedByTitle=()=>{
           <div>
             <h1 className='text-5xl font-semibold'>Hello, User!</h1>
             <h5 className='font-medium'>Have a nice day</h5>
-          </div>
-          <div className="mt-4 flex justify-between">
-            <div className='w-[80%] md:w-[93%] lg:w-[95%] flex items-center'><SearchIcon sx={{fontSize:'29px'}} /> <input type="text" className='outline-none pe-3 ps-1 py-2 rounded-full w-full bg-transparent' placeholder='Search tasks' /> </div>
-            <div className=""><i class="fa-solid fa-sliders fa-xl"></i></div>
-          </div>
+          </div>  
+            <div className='w-[80%] md:w-[93%] mt-3 lg:w-[95%] flex items-center'><SearchIcon sx={{fontSize:'29px'}} /> <input type="text" className='outline-none pe-3 ps-1 py-2 rounded-full w-full bg-transparent' placeholder='Search tasks' /> </div>
+            
           <div className="flex flex-wrap justify-between  h-full ">
-          <div className="mt-[30px] border-2 border-gray-400 rounded-md w-full">
+          <div className="mt-[20px] border-2 border-gray-400 rounded-md w-full">
             <div className="w-full p-3 pt-4">
              <div className="flex justify-between">
              <h5>Tasks <span><i class="fa-solid fa-bolt text-yellow-400"></i></span></h5>
              <div className="flex justify-between w-28">
               {/* <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5'><i class="fa-solid fa-sliders"></i></p> */}
-              <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5'><i class="fa-solid fa-trash-can"></i></p>
+              <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5 bg-red-300' onClick={deleteAll} ><i class="fa-solid fa-trash-can"></i></p>
               <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5  bg-yellow-300'><i class="fa-regular fa-face-smile bg-yellow-300"></i></p>
-              <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5' onClick={handleClickOpen}><i class="fa-solid fa-plus"></i></p>
+              <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5 bg-green-300' onClick={handleClickOpen}><i class="fa-solid fa-plus"></i></p>
                 <React.Fragment>
                   <Dialog
                     open={open}
@@ -243,8 +252,10 @@ const sortedByTitle=()=>{
                 </CardActionArea>
               </div>
                 </div>
-                    )):
-                    <p className='text-red-400'>No Tasks Available. please add a task</p>
+                    )):(
+                      <p className='text-red-700'>No Tasks Available. please add a task</p>
+
+                    )
                   }
                 </div>
 
