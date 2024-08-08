@@ -53,7 +53,7 @@ function EditTask({taskItem}) {
   
   return (
     <div>
-      <h6 onClick={handleClickOpen}><i class="fa-solid fa-pen  bg-green-400 hover:bg-gray-950 text-gray-950 hover:text-green-400 transition p-2 rounded-full"></i></h6>
+      <h6 onClick={handleClickOpen}><i class="fa-solid fa-pen  bg-green-300 hover:bg-gray-950 text-gray-950 hover:text-green-400 transition p-2 rounded-full"></i></h6>
       <React.Fragment>
                   <Dialog
                     open={open}

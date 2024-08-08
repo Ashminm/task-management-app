@@ -17,12 +17,14 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 import { addTask, deleteTask, getTask } from '../services/ApiCall';
 import EditTask from '../components/EditTask';
+import TaskView from '../components/TaskView';
 
 function Tasks() {
   const [allTask,SetAlltask]=useState([])
   const [open, setOpen] = React.useState(false);
-
+  
   const handleClickOpen = () => {
+    
     setOpen(true);
   };
 
@@ -39,7 +41,7 @@ function Tasks() {
   ) => {
     setAlignment(newAlignment);
   };
-
+const [sort,setSort]=useState()
   const [taskData,setTaskData]=useState({
     title:"",description:"",duration:"",priority:"",category:""
   })
@@ -97,6 +99,11 @@ useEffect(()=>{
       
     }
   }
+
+const sortedByTitle=()=>{
+  const sortedtitle = allTask.sort((ti1, ti2) => ti1.title.localeCompare(ti2.title));
+  setSort(sortedtitle)
+}
 
 
   return (
@@ -205,38 +212,43 @@ useEffect(()=>{
                     allTask?
                     allTask.map(item=>(
                   <div className="m-[10px]">
-                <Card sx={{borderRadius: '6px',backgroundColor:'#eb81086b',width:'17rem' }} className={` rounded-lg ${item.category === "Work" ? "bg-red-300" : item.category === "Home" ? "bg-orange-300" : item.category === "Meet" ? "bg-green-300" : "bg-yellow-300"}`}>
+                <div  sx={{borderRadius: '6px',backgroundColor:'#eb81081b' }} className={`w-[240px] h-[205px] max-h-[240px] border-1 border-gray-400 rounded-lg ${item.category === "Work" ? "bg-red-200" : item.category === "Home" ? "bg-orange-200" : item.category === "Meet" ? "bg-green-200" : "bg-yellow-200"}`}>
                 <CardActionArea>
                   <div className="flex justify-between items-center p-[9px] pb-0">
                     <p className={`text-sm text-yellow-800 px-3 py-1 m-0 rounded-full ${item.priority == "High" ? "bg-red-300": item.priority === "Medium" ? "bg-orange-300" : "bg-yellow-300"}`}>{item?.priority}</p>
-                    <span onClick={()=>{handleDeleteTask(item._id)}} ><DeleteIcon fontSize="large" className='p-2 bg-red-400 hover:bg-gray-950 text-gray-950 hover:text-red-400 transition  rounded-full' /></span>
+                    <TaskView task={item} />
                   </div>
-                  <CardContent className='pb-2'>
+                  <CardContent className='pb-2 '>
                     <div>
-                      <h5>{item?.title}</h5>
-                      <h6>{item?.description.slice(0,52)}</h6>
-                      <p className='text-[13px]'><i className="fa-regular fa-calendar pe-2"></i>{new Date(item.date).toLocaleDateString('en-GB', {
+                      <h5>{item?.title.slice(0,21)}..</h5>
+                      <h6>{item?.description.slice(0,52)}..</h6>
+                      <p className='text-[11px] pt-1'><i className="fa-regular fa-calendar pe-2"></i>{new Date(item.date).toLocaleDateString('en-GB', {
                             day: 'numeric',
                             month: 'short'
                           })}
                         </p>
                       <div className="flex justify-between items-end">
-                        <EditTask taskItem={item} />
                         <div className="flex">
-                          <h6 className='me-3'><i class="fa-regular fa-clock pe-2"></i>{item?.duration}</h6>
-                          <h6><i class="fa-solid fa-list pe-2"></i>{item?.category}</h6>
+                        <EditTask taskItem={item} />
+                        <span className='ms-3' onClick={()=>{handleDeleteTask(item._id)}} ><DeleteIcon fontSize="large" className='p-2 bg-red-400 hover:bg-gray-950 text-gray-950 hover:text-red-400 transition  rounded-full' /></span>
+                        </div>
+                        <div className="flex">
+                          <h6 className='me-3 text-[12px]'><i class="fa-regular fa-clock pe-2"></i>{item?.duration}</h6>
+                          <h6 className='text-[12px]'><span>{item.category === "Work"? <i class="fa-solid fa-briefcase fa-sm"></i> : item.category === "Home"? <i class="fa-solid fa-house fa-sm"></i> : item.category === "Meet" ? <i class="fa-solid fa-globe fa-sm"></i> : <i class="fa-solid fa-wifi fa-sm"></i> }</span>  {item?.category}</h6>
                         </div>
                       </div>
                     </div>
                   
                   </CardContent>
                 </CardActionArea>
-              </Card>
+              </div>
                 </div>
                     )):
-                    <p>No Tasks</p>
+                    <p className='text-red-400'>No Tasks Available. please add a task</p>
                   }
                 </div>
+
+               
           </div>
           </div>
         </div>
