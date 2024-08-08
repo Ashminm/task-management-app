@@ -15,7 +15,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
-import { addTask, getTask } from '../services/ApiCall';
+import { addTask, deleteTask, getTask } from '../services/ApiCall';
+import EditTask from '../components/EditTask';
 
 function Tasks() {
   const [allTask,SetAlltask]=useState([])
@@ -60,7 +61,7 @@ const handleAddTask=async(e)=>{
     const res=await addTask(taskData)
     if(res.status === 200){
       console.log(res)
-    console.log('Suceesfull!!');
+   alert('Suceesfull!!');
     setTaskData({title:"",description:"",duration:"",priority:"",category:""})
     }else{
       alert(res.response.data)
@@ -73,7 +74,12 @@ handleClose();
 
 const gettask=async()=>{
   const Result=await getTask()
-  SetAlltask(Result.data)
+  if(Result.status === 200){
+    SetAlltask(Result.data)
+  }else{
+    console.log(Result.response.data);
+    
+  }
   
 }
 useEffect(()=>{
@@ -81,10 +87,20 @@ useEffect(()=>{
 },[])
 // console.log(allTask);
 
+  const handleDeleteTask=async(id)=>{
+    const Result= await deleteTask(id)
+    if(Result.status===200){
+      alert('Delete success!!')
+      gettask()
+    }else{
+      console.log(Result.response.data);
+      
+    }
+  }
 
 
   return (
-    <div className='bg-[#dab6924b]  h-full p-4'>
+    <div className='bg-[#dab6924b] h-full p-4'>
       <Header/>
         <div className="h-full mt-4">
           <div>
@@ -96,12 +112,13 @@ useEffect(()=>{
             <div className=""><i class="fa-solid fa-sliders fa-xl"></i></div>
           </div>
           <div className="flex flex-wrap justify-between  h-full ">
-          <div className="mt-[30px] border-2 border-gray-400 rounded-md lg:w-[59%] md:w-[80%] sm:w-full">
+          <div className="mt-[30px] border-2 border-gray-400 rounded-md w-full">
             <div className="w-full p-3 pt-4">
              <div className="flex justify-between">
              <h5>Tasks </h5>
-             <div className="flex justify-between w-24">
+             <div className="flex justify-between w-36">
               <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5'><i class="fa-solid fa-sliders"></i></p>
+              <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5'><i class="fa-solid fa-trash-can"></i></p>
               <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5'><i class="fa-solid fa-arrow-rotate-left"></i></p>
               <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5' onClick={handleClickOpen}><i class="fa-solid fa-plus"></i></p>
                 <React.Fragment>
@@ -125,7 +142,7 @@ useEffect(()=>{
                         </div>
                         <div className="mb-3">
                           <label className='text-sm font-semibold'>Description</label><br />
-                          <textarea onChange={(e)=>{setTaskData({...taskData,description:e.target.value})}} name="" id="" className='resize-none bg-gray-300 py-2 px-4 ps-2 outline-none rounded-md w-full' placeholder='Enter task description'></textarea>
+                          <textarea rows={4} onChange={(e)=>{setTaskData({...taskData,description:e.target.value})}} name="" id="" className='resize-none bg-gray-300 py-2 px-4 ps-2 outline-none rounded-md w-full' placeholder='Enter task description'></textarea>
                         </div>
                         <div className="mb-3 flex justify-between">
                         <div className="">
@@ -134,7 +151,7 @@ useEffect(()=>{
                               color="primary"
                               value={taskData.priority}
                               exclusive
-                              onChange={handlePriorityChange} // Attach the handler here
+                              onChange={handlePriorityChange}
                               aria-label="Priority"
                               className='w-full'
                             >
@@ -183,16 +200,16 @@ useEffect(()=>{
              </div>
              </div>
             </div>
-                <div className="flex flex-wrap overflow-y-scroll">
+                <div className="flex flex-wrap justify-center md:justify-evenly lg:justify-start  mx-[14px] mb-3 overflow-y-scroll h-[29rem]">
                   {
                     allTask?
                     allTask.map(item=>(
-                  <div className="m-2">
-                <Card sx={{ maxWidth: 345 ,borderRadius: '6px',backgroundColor:'#eb81086b' }} className={`lg:w-[250px] sm:w-ful rounded-lg ${item.category === "Work" ? "bg-red-300" : item.category === "Home" ? "bg-orange-300" : item.category === "Meet" ? "bg-green-300" : "bg-yellow-300"}`}>
+                  <div className="m-[10px]">
+                <Card sx={{borderRadius: '6px',backgroundColor:'#eb81086b',width:'17rem' }} className={` rounded-lg ${item.category === "Work" ? "bg-red-300" : item.category === "Home" ? "bg-orange-300" : item.category === "Meet" ? "bg-green-300" : "bg-yellow-300"}`}>
                 <CardActionArea>
                   <div className="flex justify-between items-center p-[9px] pb-0">
                     <p className={`text-sm text-yellow-800 px-3 py-1 m-0 rounded-full ${item.priority == "High" ? "bg-red-300": item.priority === "Medium" ? "bg-orange-300" : "bg-yellow-300"}`}>{item?.priority}</p>
-                    <DeleteIcon fontSize="large" className='p-2 bg-red-400 hover:bg-gray-950 text-gray-950 hover:text-red-400 transition  rounded-full' />
+                    <span onClick={()=>{handleDeleteTask(item._id)}} ><DeleteIcon fontSize="large" className='p-2 bg-red-400 hover:bg-gray-950 text-gray-950 hover:text-red-400 transition  rounded-full' /></span>
                   </div>
                   <CardContent className='pb-2'>
                     <div>
@@ -204,7 +221,7 @@ useEffect(()=>{
                           })}
                         </p>
                       <div className="flex justify-between items-end">
-                        <h6><i class="fa-solid fa-pen  bg-green-400 hover:bg-gray-950 text-gray-950 hover:text-green-400 transition p-2 rounded-full"></i></h6>
+                        <EditTask taskItem={item} />
                         <div className="flex">
                           <h6 className='me-3'><i class="fa-regular fa-clock pe-2"></i>{item?.duration}</h6>
                           <h6><i class="fa-solid fa-list pe-2"></i>{item?.category}</h6>
@@ -220,70 +237,6 @@ useEffect(()=>{
                     <p>No Tasks</p>
                   }
                 </div>
-          </div>
-          <div className="border-2 mt-[30px] border-gray-400 rounded-md lg:w-[37%] md:w-80%] sm:w-full">
-          <div className="w-full p-3 pt-4">
-             <div className="flex justify-between">
-             <h5>Completed </h5>
-             <div className="flex justify-between w-24">
-              <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5'><i class="fa-solid fa-sliders"></i></p>
-              <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5'><i class="fa-solid fa-arrow-rotate-left"></i></p>
-              <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5'><i class="fa-solid fa-trash-can"></i></p>
-             </div>
-             </div>
-            </div>
-          <div className="flex flex-wrap">
-          <div className="m-2">
-                <Card sx={{ maxWidth: 345 ,borderRadius: '6px',backgroundColor:'#8A9EA7' }} className='lg:w-[234px] sm:w-[300px] rounded-lg'>
-                <CardActionArea>
-                  <div className="flex justify-between items-center p-[9px] pb-0">
-                    <p className='text-sm bg-gray-950 text-yellow-400 px-3 py-1 m-0 rounded-full'>Hight</p>
-                    <DeleteIcon fontSize="large" className='p-2 bg-gray-950 text-lime-50 rounded-full' />
-                  </div>
-                  <CardContent className='pb-2'>
-                    <div>
-                      <h5>Section at the bottom of a document or webpage.</h5>
-                      <h6>Section at the bottom of a document or webpage</h6>
-                      <p className='text-[13px]'><i class="fa-regular fa-calendar pe-2"></i>15 sep</p>
-                      <div className="flex justify-between items-end">
-                        <h6><i class="fa-solid fa-pen bg-gray-950 text-sky-500 p-2 rounded-full"></i></h6>
-                        <div className="flex">
-                          <h6 className='me-3'><i class="fa-regular fa-clock pe-2"></i>2hr</h6>
-                          <h6><i class="fa-regular fa-square pe-2"></i>Meet</h6>
-                        </div>
-                      </div>
-                    </div>
-                  
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-                </div>
-          <div className="m-2">
-                <Card sx={{ maxWidth: 345 ,borderRadius: '6px',backgroundColor:'#8A9EA7' }} className='lg:w-[234px] sm:w-[300px] rounded-lg'>
-                <CardActionArea>
-                  <div className="flex justify-between items-center p-[9px] pb-0">
-                    <p className='text-sm bg-gray-950 text-yellow-400 px-3 py-1 m-0 rounded-full'>Hight</p>
-                    <DeleteIcon fontSize="large" className='p-2 bg-gray-950 text-lime-50 rounded-full' />
-                  </div>
-                  <CardContent className='pb-2'>
-                    <div>
-                      <h5>Section at the bottom of a document or webpage.</h5>
-                      <h6>Section at the bottom of a document or webpage</h6>
-                      <p className='text-[13px]'><i class="fa-regular fa-calendar pe-2"></i>15 sep</p>
-                      <div className="flex justify-between items-end">
-                        <h6><i class="fa-solid fa-pen bg-gray-950 text-sky-500 p-2 rounded-full"></i></h6>
-                        <div className="flex">
-                          <h6 className='me-3'><i class="fa-regular fa-clock pe-2"></i>2hr</h6>
-                          <h6><i class="fa-regular fa-square pe-2"></i>Meet</h6>
-                        </div>
-                      </div>
-                    </div>
-                  
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-                </div>
-          </div>
           </div>
           </div>
         </div>
