@@ -64,7 +64,8 @@ const [sort,setSort]=useState()
 
   // add a task
 const handleAddTask=async(e)=>{
-  e.preventDefault()
+  try{
+    e.preventDefault()
   if(!taskData.title || !taskData.description || !taskData.duration || !taskData.priority || !taskData.category){
     toast("Enter values to every fields!", {
       icon: "⚠️",
@@ -100,17 +101,26 @@ const handleAddTask=async(e)=>{
     }
      
   }
+  }catch(err){
+    console.log(err);
+    
+  }
 
 
 }
 
 // gettasks with search
 const gettask=async()=>{
-  const Result=await getTask(search)
+  try{
+    const Result=await getTask(search)
   if(Result.status === 200){
-    SetAlltask(Result.data)
+    SetAlltask(Result?.data)
   }else{
     console.log(Result.response.data);
+    
+  }
+  }catch(err){
+    console.log("An error occurred:",err);
     
   }
   

@@ -2,7 +2,7 @@
 import { commonApi } from "./commonApi"
 
 // baseurl
-const BASEURL="https://task-management-server-n58v.onrender.com"
+const BASEURL="http://localhost:3000"
 
 // Api call
 export const addTask=async(data)=>{
