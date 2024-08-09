@@ -62,7 +62,7 @@ function EditTask({taskItem}) {
     setEditResponse(Result.data)
       handleClose()
     }else{
-      toast.error("Task Edited faild! ",  {
+      toast.error("Please make Changes! ",  {
         style: {
             borderRadius: "10px",
             background: "#333",

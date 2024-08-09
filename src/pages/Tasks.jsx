@@ -87,6 +87,7 @@ const handleAddTask=async(e)=>{
     });
     setAddResponse(res.data)
     setTaskData({title:"",description:"",duration:"",priority:"",category:""})
+    handleClose();
     }else{
       toast.error("Task Added faild! ",  {
         style: {
@@ -100,7 +101,7 @@ const handleAddTask=async(e)=>{
      
   }
 
-handleClose();
+
 }
 
 // gettasks with search
@@ -213,7 +214,7 @@ useEffect(()=>{
                         <form>
                         <div className="mb-3">
                           <label className='text-sm font-semibold'>Title</label><br />
-                          <input type="text" onChange={(e)=>{setTaskData({...taskData,title:e.target.value})}} className='bg-gray-300 py-2 px-4 ps-2 outline-none rounded-md w-full' placeholder='Social Media Campaign' />
+                          <input type="text" required onChange={(e)=>{setTaskData({...taskData,title:e.target.value})}} className='bg-gray-300 py-2 px-4 ps-2 outline-none rounded-md w-full' placeholder='Social Media Campaign' />
                         </div>
                         <div className="mb-3">
                           <label className='text-sm font-semibold'>Description</label><br />
