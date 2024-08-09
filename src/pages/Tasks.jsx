@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { CardActionArea } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -19,10 +18,16 @@ import { addTask, deleteTask, getTask,deleteAllTask } from '../services/ApiCall'
 import EditTask from '../components/EditTask';
 import TaskView from '../components/TaskView';
 import toast from 'react-hot-toast';
+import { addTaskConext } from '../Context/ContextShare';
+import { editTaskConext } from '../Context/ContextShare';
+
 
 function Tasks() {
   const [allTask,SetAlltask]=useState([])
   const [search,setSearch]=useState("")
+  const {addResponse,setAddResponse}=useContext(addTaskConext)
+  const {editResponse,setEditResponse}=useContext(editTaskConext)
+
   const [open, setOpen] = React.useState(false);
   
   const handleClickOpen = () => {
@@ -80,6 +85,7 @@ const handleAddTask=async(e)=>{
             color: "#FFFF",
         },
     });
+    setAddResponse(res.data)
     setTaskData({title:"",description:"",duration:"",priority:"",category:""})
     }else{
       toast.error("Task Added faild! ",  {
@@ -110,7 +116,7 @@ const gettask=async()=>{
 }
 useEffect(()=>{
   gettask()
-},[search])
+},[search,addResponse,editResponse])
 
 // console.log(allTask);
 // console.log(search);

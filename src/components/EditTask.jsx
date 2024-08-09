@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -9,9 +9,11 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { editTask } from '../services/ApiCall';
 import toast from 'react-hot-toast';
+import { editTaskConext } from '../Context/ContextShare';
+
 
 function EditTask({taskItem}) {
-
+  const {editResponse,setEditResponse}=useContext(editTaskConext)
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -57,6 +59,7 @@ function EditTask({taskItem}) {
             color: "#FFFF",
         },
     });
+    setEditResponse(Result.data)
       handleClose()
     }else{
       toast.error("Task Edited faild! ",  {
