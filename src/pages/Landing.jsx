@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 function Landing() {
   return (
-    <div className='bg-[#dab692a9] h-[48rem] flex justify-center items-center overflow-hidden'>
+    <div className='bg-[#dab692a9] h-screen flex justify-center items-center overflow-hidden'>
       <div className="text-center p-[8%]">
         <p className='uppercase text-[10px] font-bold'><span className='border-1 border-gray-800 p-2 rounded-full px-3'>Master your day</span></p>
         <h1 className='text-[60px]  font-semibold capitalize'>
