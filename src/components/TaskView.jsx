@@ -38,10 +38,10 @@ function TaskView({task}) {
            <p>{task.description}</p>
            <div className="flex justify-between">
            <p className={`text-md w-full content-center px-3 py-1 me-4 rounded-full ${task.priority == "High" ? "bg-red-300": task.priority === "Medium" ? "bg-orange-300" : "bg-yellow-300"}`}>{task?.priority}</p>
-           <p className={`text-md w-full content-center px-3 py-1 me-4 rounded-full ${task.duration == "High" ? "bg-red-300": task.duration === "Medium" ? "bg-orange-300" : "bg-yellow-300"}`}>{task?.duration}</p>
-           <p className={`text-md w-full content-center px-3 py-1 me-4 rounded-full ${task.category == "High" ? "bg-red-300": task.category === "Medium" ? "bg-orange-300" : "bg-yellow-300"}`}>{task?.category}</p>
+           <p className={`text-md w-full content-center px-3 py-1 me-4 rounded-full ${task.duration == "30sec" ? "bg-red-300": task.duration === "1hr" ? "bg-orange-300" : task.duration == "2hr" ? "bg-sky-300" : "bg-yellow-300"}`}>{task?.duration}</p>
+           <p className={`text-md w-full content-center px-3 py-1 me-4 rounded-full ${task.category == "Work" ? "bg-red-300": task.category === "Home" ? "bg-orange-300" : "bg-yellow-300"}`}>{task?.category}</p>
            </div>
-           <p className='mt-4'><Link className='bg-gray-900 px-4 py-3 text-lime-50 border-2 duration-500 border-gray-900 rounded-md hover:bg-gray-300 hover:text-gray-950' style={{textDecoration:'none'}} to={`/FullScreen/${task?._id}`}>FullScreen View <i class="fa-solid fa-up-right-and-down-left-from-center ps-2"></i></Link></p>
+           <p className='mt-4'><Link className='bg-gray-400 px-4 py-3  duration-500 rounded-md hover:bg-gray-300 text-gray-950' style={{textDecoration:'none'}} to={`/FullScreen/${task?._id}`}>FullScreen View <i class="fa-solid fa-up-right-and-down-left-from-center ps-2"></i></Link></p>
           </DialogContentText>
         </DialogContent>
         <DialogActions>

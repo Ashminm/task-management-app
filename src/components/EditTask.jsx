@@ -8,6 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { editTask } from '../services/ApiCall';
+import toast from 'react-hot-toast';
 
 function EditTask({taskItem}) {
 
@@ -37,14 +38,34 @@ function EditTask({taskItem}) {
  const handleEditTask=async()=>{
   const {title,description,duration,priority,category}=editTasks
   if(!title || !description || !duration || !priority || !category){
-    alert("Plese fill the detailse!!")
+    toast("Enter values to every fields!", {
+      icon: "⚠️",
+      style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#FFFF00",
+      },
+  });
   }else{
     const body= {title,description,duration,priority,category}
     const Result=await editTask(body,taskItem._id)
     if(Result.status===200){
-      alert("Successfully edit")
+      toast.success(`Task Edited successfull!!`, {
+        style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#FFFF",
+        },
+    });
       handleClose()
     }else{
+      toast.error("Task Edited faild! ",  {
+        style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#FFF",
+        },
+    });
       console.log(Result.response.data);
       
     }

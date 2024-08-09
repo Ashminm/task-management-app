@@ -18,6 +18,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { addTask, deleteTask, getTask,deleteAllTask } from '../services/ApiCall';
 import EditTask from '../components/EditTask';
 import TaskView from '../components/TaskView';
+import toast from 'react-hot-toast';
 
 function Tasks() {
   const [allTask,SetAlltask]=useState([])
@@ -60,14 +61,34 @@ const [sort,setSort]=useState()
 const handleAddTask=async(e)=>{
   e.preventDefault()
   if(!taskData.title || !taskData.description || !taskData.duration || !taskData.priority || !taskData.category){
-    alert("Enter all fileds!")
+    toast("Enter values to every fields!", {
+      icon: "⚠️",
+      style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#FFFF00",
+      },
+  });
   }else{
     const res=await addTask(taskData)
     if(res.status === 200){
       console.log(res)
-   alert('Suceesfull!!');
+      toast.success(`Task Added successfull!!`, {
+        style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#FFFF",
+        },
+    });
     setTaskData({title:"",description:"",duration:"",priority:"",category:""})
     }else{
+      toast.error("Task Added faild! ",  {
+        style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#FFF",
+        },
+    });
       alert(res.response.data)
     }
      
@@ -98,9 +119,22 @@ useEffect(()=>{
   const handleDeleteTask=async(id)=>{
     const Result= await deleteTask(id)
     if(Result.status===200){
-      alert('Delete success!!')
+      toast.success(`Task Deeted successfull!!`, {
+        style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#FFFF",
+        },
+    });
       gettask()
     }else{
+      toast.error("Task Deleted faild! ",  {
+        style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#FFF",
+        },
+    });
       console.log(Result.response.data);
       
     }
@@ -110,8 +144,21 @@ useEffect(()=>{
   const deleteAll=async()=>{
     const res=await deleteAllTask()
     if(res.status===200){
-      alert("All task deleted!!!")
+      toast.success(`Delete All Tasks!!`, {
+        style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#FFFF",
+        },
+    });
     }else{
+      toast.error("Deleteion faild! ",  {
+        style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#FFF",
+        },
+    });
       console.log(res.response.data);
       
     }
