@@ -21,6 +21,7 @@ import TaskView from '../components/TaskView';
 
 function Tasks() {
   const [allTask,SetAlltask]=useState([])
+  const [search,setSearch]=useState("")
   const [open, setOpen] = React.useState(false);
   
   const handleClickOpen = () => {
@@ -55,6 +56,7 @@ const [sort,setSort]=useState()
     handleChange()
   };
 
+  // add a task
 const handleAddTask=async(e)=>{
   e.preventDefault()
   if(!taskData.title || !taskData.description || !taskData.duration || !taskData.priority || !taskData.category){
@@ -74,8 +76,9 @@ const handleAddTask=async(e)=>{
 handleClose();
 }
 
+// gettasks with search
 const gettask=async()=>{
-  const Result=await getTask()
+  const Result=await getTask(search)
   if(Result.status === 200){
     SetAlltask(Result.data)
   }else{
@@ -86,9 +89,12 @@ const gettask=async()=>{
 }
 useEffect(()=>{
   gettask()
-},[])
-// console.log(allTask);
+},[search])
 
+// console.log(allTask);
+// console.log(search);
+
+// delete task
   const handleDeleteTask=async(id)=>{
     const Result= await deleteTask(id)
     if(Result.status===200){
@@ -100,6 +106,7 @@ useEffect(()=>{
     }
   }
 
+  // delete all tasks
   const deleteAll=async()=>{
     const res=await deleteAllTask()
     if(res.status===200){
@@ -116,7 +123,6 @@ useEffect(()=>{
 //   setSort(sortedtitle)
 // }
 
-
   return (
     <div className='bg-[#dab6924b] h-full p-4'>
       <Header/>
@@ -125,7 +131,7 @@ useEffect(()=>{
             <h1 className='text-5xl font-semibold'>Hello, User!</h1>
             <h5 className='font-medium'>Have a nice day</h5>
           </div>  
-            <div className='w-[80%] md:w-[93%] mt-3 lg:w-[95%] flex items-center'><SearchIcon sx={{fontSize:'29px'}} /> <input type="text" className='outline-none pe-3 ps-1 py-2 rounded-full w-full bg-transparent' placeholder='Search tasks' /> </div>
+            <div className='w-[80%] md:w-[93%] mt-3 lg:w-[95%] flex items-center'><SearchIcon sx={{fontSize:'29px'}} /> <input onChange={(e)=>{setSearch(e.target.value)}} type="text" className='outline-none pe-3 ps-1 py-2 rounded-full w-full bg-transparent' placeholder='Search tasks' /> </div>
             
           <div className="flex flex-wrap justify-between  h-full ">
           <div className="mt-[20px] border-2 border-gray-400 rounded-md w-full">
@@ -239,7 +245,7 @@ useEffect(()=>{
                       <div className="flex justify-between items-end">
                         <div className="flex">
                         <EditTask taskItem={item} />
-                        <span className='ms-3' onClick={()=>{handleDeleteTask(item._id)}} ><DeleteIcon fontSize="large" className='p-2 bg-red-400 hover:bg-gray-950 text-gray-950 hover:text-red-400 transition  rounded-full' /></span>
+                        <span className='ms-3' onClick={()=>{handleDeleteTask(item._id)}} ><DeleteIcon fontSize="large" className='p-2 bg-red-400 hover:bg-gray-950 text-gray-950 hover:text-red-400 duration-500  rounded-full' /></span>
                         </div>
                         <div className="flex">
                           <h6 className='me-3 text-[12px]'><i class="fa-regular fa-clock pe-2"></i>{item?.duration}</h6>
@@ -253,7 +259,7 @@ useEffect(()=>{
               </div>
                 </div>
                     )):(
-                      <p className='text-red-700'>No Tasks Available. please add a task</p>
+                      <p className='text-gray-700'>No Tasks Available. please add a task</p>
 
                     )
                   }

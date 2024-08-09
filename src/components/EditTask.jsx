@@ -33,6 +33,7 @@ function EditTask({taskItem}) {
 
   // console.log(editTasks);
   
+  // edit task
  const handleEditTask=async()=>{
   const {title,description,duration,priority,category}=editTasks
   if(!title || !description || !duration || !priority || !category){
@@ -53,7 +54,7 @@ function EditTask({taskItem}) {
   
   return (
     <div>
-      <h6 onClick={handleClickOpen}><i class="fa-solid fa-pen  bg-green-300 hover:bg-gray-950 text-gray-950 hover:text-green-400 transition p-2 rounded-full"></i></h6>
+      <h6 onClick={handleClickOpen}><i class="fa-solid fa-pen  bg-green-300 hover:bg-gray-950 text-gray-950 hover:text-green-400 duration-500 p-2 rounded-full"></i></h6>
       <React.Fragment>
                   <Dialog
                     open={open}
@@ -103,7 +104,6 @@ function EditTask({taskItem}) {
                             <option value="2hr" className='form-control'>2hr</option>
                             <option value="3hr" className='form-control'>3hr</option>
                           </select>
-                        {/* <input type="text" onChange={(e)=>{setTaskData({...taskData,duration:e.target.value})}} className='bg-gray-300 py-[12px] px-4 ps-3 outline-none rounded-md w-[70px]' placeholder='2hr' /> */}
                         </div>
                         </div>
                         <div >

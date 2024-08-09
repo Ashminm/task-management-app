@@ -9,8 +9,8 @@ export const addTask=async(data)=>{
     return await commonApi("POST",`${BASEURL}/add-task`,data,"")
 }
 
-export const getTask=async()=>{
-    return await commonApi("GET",`${BASEURL}/get-task`,"")
+export const getTask=async(search)=>{
+    return await commonApi("GET",`${BASEURL}/get-task?search=${search}`)
 }
 
 export const editTask=async(body,id)=>{

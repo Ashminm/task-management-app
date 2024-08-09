@@ -19,7 +19,7 @@ function TaskView({task}) {
     };
   return (
     <div>
-         <h6 onClick={handleClickOpen}><i class="fa-regular fa-eye  bg-sky-200 hover:bg-gray-950 text-gray-950 hover:text-sky-200 transition p-2 rounded-full"></i></h6>
+         <h6 onClick={handleClickOpen}><i class="fa-regular fa-eye  bg-sky-200 hover:bg-gray-950 text-gray-950 hover:text-sky-200 duration-500 p-2 rounded-full"></i></h6>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -41,7 +41,7 @@ function TaskView({task}) {
            <p className={`text-md w-full content-center px-3 py-1 me-4 rounded-full ${task.duration == "High" ? "bg-red-300": task.duration === "Medium" ? "bg-orange-300" : "bg-yellow-300"}`}>{task?.duration}</p>
            <p className={`text-md w-full content-center px-3 py-1 me-4 rounded-full ${task.category == "High" ? "bg-red-300": task.category === "Medium" ? "bg-orange-300" : "bg-yellow-300"}`}>{task?.category}</p>
            </div>
-           <button><Link className='decoration-0' to={`/FullScreen/${task?._id}`}>View in Full Screen <i class="fa-solid fa-up-right-and-down-left-from-center"></i></Link></button>
+           <p className='mt-4'><Link className='bg-gray-900 px-4 py-3 text-lime-50 border-2 duration-500 border-gray-900 rounded-md hover:bg-gray-300 hover:text-gray-950' style={{textDecoration:'none'}} to={`/FullScreen/${task?._id}`}>FullScreen View <i class="fa-solid fa-up-right-and-down-left-from-center ps-2"></i></Link></p>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
