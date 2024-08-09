@@ -182,7 +182,7 @@ useEffect(()=>{
       <Header/>
         <div className="h-full mt-4">
           <div>
-            <h1 className='text-5xl font-semibold'>Hello, User!</h1>
+            <h1 className='text-5xl font-semibold'>Hello, Alexa!</h1>
             <h5 className='font-medium'>Have a nice day 🎯</h5>
           </div>  
             <div className='w-[80%] md:w-[93%] mt-3 lg:w-[95%] flex items-center'><SearchIcon sx={{fontSize:'29px'}} /> <input onChange={(e)=>{setSearch(e.target.value)}} type="text" className='outline-none pe-3 ps-1 py-2 rounded-full w-full bg-transparent' placeholder='Search tasks' /> </div>
