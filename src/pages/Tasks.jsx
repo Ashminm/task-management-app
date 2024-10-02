@@ -25,6 +25,7 @@ import { editTaskConext } from '../Context/ContextShare';
 function Tasks() {
   const [allTask,SetAlltask]=useState([])
   const [search,setSearch]=useState("")
+  const [loading, setLoading] = useState(false);
   const {addResponse,setAddResponse}=useContext(addTaskConext)
   const {editResponse,setEditResponse}=useContext(editTaskConext)
 
@@ -115,6 +116,7 @@ const gettask=async()=>{
     const Result=await getTask(search)
   if(Result.status === 200){
     SetAlltask(Result?.data)
+    setLoading(false);
   }else{
     console.log(Result.response.data);
     
@@ -127,6 +129,7 @@ const gettask=async()=>{
 }
 useEffect(()=>{
   gettask()
+  setLoading(true);
 },[search,addResponse,editResponse])
 
 // console.log(allTask);
@@ -181,11 +184,6 @@ useEffect(()=>{
     }
   }
 
-
-// const sortedByTitle=()=>{
-//   const sortedtitle = allTask.sort((ti1, ti2) => ti1.title.localeCompare(ti2.title));
-//   setSort(sortedtitle)
-// }
 
   return (
     <div className='bg-[#dab6924b] h-full p-4'>
@@ -286,8 +284,15 @@ useEffect(()=>{
              </div>
             </div>
                 <div className="flex flex-wrap justify-center md:justify-evenly lg:justify-start  mx-[14px] mb-3 overflow-y-scroll h-[29rem]">
-                  {
-                    allTask?
+                  { loading ? (
+                    <div className="flex items-end h-24 p-8 ">
+                      <h2 className='m-0'><i class="fa-solid fa-circle-notch fa-spin-pulse me-2"></i></h2>
+                      <h5 className='m-0'>Loading </h5>
+                      <h6 className='m-0'><i class="fa-solid fa-ellipsis fa-fade"></i></h6>
+                    </div>
+                  
+                  ) :(
+                    allTask && allTask.length > 0 ?(
                     allTask.map(item=>(
                   <div className="m-[10px]">
                 <div  sx={{borderRadius: '6px',backgroundColor:'#eb81081b' }} className={`w-[240px] h-[205px] max-h-[240px] border-1 border-gray-400 rounded-lg ${item.category === "Work" ? "bg-red-200" : item.category === "Home" ? "bg-orange-200" : item.category === "Meet" ? "bg-green-200" : "bg-yellow-200"}`}>
@@ -321,9 +326,9 @@ useEffect(()=>{
                 </CardActionArea>
               </div>
                 </div>
-                    )):(
+                    ))):(
                       <p className='text-gray-700'>No Tasks Available. please add a task</p>
-
+                    )
                     )
                   }
                 </div>
