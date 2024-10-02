@@ -303,8 +303,8 @@ useEffect(()=>{
                   </div>
                   <CardContent className='pb-2 '>
                     <div>
-                      <h5>{item?.title.slice(0,18)}..</h5>
-                      <h6>{item?.description.slice(0,25)}..</h6>
+                      <h5>{item?.title.slice(0,18)}</h5>
+                      <h6>{item?.description.slice(0,21)}..</h6>
                       <p className='text-[11px] pt-1'><i className="fa-regular fa-calendar pe-2"></i>{new Date(item.date).toLocaleDateString('en-GB', {
                             day: 'numeric',
                             month: 'short'
