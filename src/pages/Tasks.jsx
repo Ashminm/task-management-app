@@ -200,7 +200,7 @@ useEffect(()=>{
           <div className="flex flex-wrap justify-between  h-full ">
           <div className="mt-[20px] border-2 border-gray-400 rounded-md w-full">
             <div className="w-full pt-4">
-             <div className="flex justify-between">
+             <div className="flex justify-between mx-3.5">
              <h5>Tasks <span><i class="fa-solid fa-bolt text-yellow-400"></i></span></h5>
              <div className="flex justify-between w-28">
               <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5 bg-red-300' onClick={deleteAll} ><i class="fa-solid fa-trash-can"></i></p>
