@@ -199,11 +199,10 @@ useEffect(()=>{
             
           <div className="flex flex-wrap justify-between  h-full ">
           <div className="mt-[20px] border-2 border-gray-400 rounded-md w-full">
-            <div className="w-full p-3 pt-4">
+            <div className="w-full pt-4">
              <div className="flex justify-between">
              <h5>Tasks <span><i class="fa-solid fa-bolt text-yellow-400"></i></span></h5>
              <div className="flex justify-between w-28">
-              {/* <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5'><i class="fa-solid fa-sliders"></i></p> */}
               <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5 bg-red-300' onClick={deleteAll} ><i class="fa-solid fa-trash-can"></i></p>
               <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5  bg-yellow-300'><i class="fa-regular fa-face-smile bg-yellow-300"></i></p>
               <p className='cursor-pointer border-1 border-gray-400 rounded-full px-[5px] pt-0.5 bg-green-300' onClick={handleClickOpen}><i class="fa-solid fa-plus"></i></p>
@@ -299,8 +298,8 @@ useEffect(()=>{
                   </div>
                   <CardContent className='pb-2 '>
                     <div>
-                      <h5>{item?.title.slice(0,21)}..</h5>
-                      <h6>{item?.description.slice(0,52)}..</h6>
+                      <h5>{item?.title.slice(0,18)}..</h5>
+                      <h6>{item?.description.slice(0,25)}..</h6>
                       <p className='text-[11px] pt-1'><i className="fa-regular fa-calendar pe-2"></i>{new Date(item.date).toLocaleDateString('en-GB', {
                             day: 'numeric',
                             month: 'short'
